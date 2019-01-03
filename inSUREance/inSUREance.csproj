@@ -95,9 +95,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Adviser.cs" />
     <Compile Include="Classes\Insurance.cs" />
     <Compile Include="Classes\InsuranceType.cs" />
-    <Compile Include="Classes\User.cs" />
+    <Compile Include="Classes\Message.cs" />
+    <Compile Include="GlobalVariables.cs" />
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -112,6 +114,12 @@
     </Compile>
     <Compile Include="Pages\User\InsuranceOverview.xaml.cs">
       <DependentUpon>InsuranceOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\User\QuestionMessenger.xaml.cs">
+      <DependentUpon>QuestionMessenger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\User\Questions.xaml.cs">
+      <DependentUpon>Questions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -160,6 +168,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\User\QuestionMessenger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\User\Questions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -167,6 +183,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Pictures\" />
     <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\Adviser\" />
     <Folder Include="Pages\Provider\" />

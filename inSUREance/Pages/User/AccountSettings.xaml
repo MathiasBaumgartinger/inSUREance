@@ -2,6 +2,7 @@
     x:Class="inSUREance.Pages.User.AccountSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:data="using:inSUREance.Classes"
     xmlns:local="using:inSUREance.Pages.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,16 +10,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="227,386,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="380,386,0,0" Text="Birthday" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="528,386,0,0" Text="Address" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="699,386,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="856,386,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="227,411,0,0" Text="TextBox" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="699,411,0,0" Text="TextBox" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="528,411,0,0" Text="TextBox" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="380,411,0,0" Text="TextBox" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="856,411,0,0" Text="TextBox" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="986,411,0,0"/>
+        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,170,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,250,0,0" Text="Birthday" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,325,0,0" Text="Address" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,402,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,472,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox Name="UsernameBox" HorizontalAlignment="Left" Margin="124,195,0,0" Text="{Binding Path=NameDisplay}" VerticalAlignment="Top"/>
+        <TextBox Name="AddressBox" HorizontalAlignment="Left" Margin="124,350,0,0" Text="{Binding Path=Address}" VerticalAlignment="Top"/>
+        <TextBox Name="BirthdayBox" HorizontalAlignment="Left" Margin="124,275,0,0" Text="{Binding Path=Date}" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="124,427,0,0" Text="{Binding}" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="124,497,0,0" Text="TextBox" VerticalAlignment="Top"/>
+        <Button x:Name="Update" Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,560,0,0" Click="Update_Click"/>
     </Grid>
 </Page>

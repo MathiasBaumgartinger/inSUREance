@@ -18,7 +18,7 @@ namespace inSUREance.Classes
         {
             public static List<InsuranceType> GetTypes()
             {
-
+                // TODO: Database stuff
                 List<InsuranceType> insuranceTypes = new List<InsuranceType>();
 
                 insuranceTypes.Add(new InsuranceType("typeA"));

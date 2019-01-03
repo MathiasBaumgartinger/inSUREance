@@ -41,6 +41,14 @@ namespace inSUREance.Pages.User
                 {
                     this.Frame.Navigate(typeof(AccountSettings));
                 }
+                if (clickedItem.Tag.ToString() == "Questions")
+                {
+                    this.Frame.Navigate(typeof(Questions));
+                }
+                if (clickedItem.Tag.ToString() == "Rating")
+                {
+                   // this.Frame.Navigate(typeof(AccountSettings));
+                }
             } 
         }
 

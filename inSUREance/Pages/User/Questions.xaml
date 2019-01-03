@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="inSUREance.Pages.User.Questions"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:inSUREance.Pages.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:inSUREance.Classes"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <UserControl>
+        <UserControl.Resources>
+            <DataTemplate x:Key="AdvisersListedTemplate" x:DataType="data:Adviser">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
+                    <Image Name="adviser" Source="{x:Bind Picture}" HorizontalAlignment="Center" Width="150" />
+                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" />
+                </StackPanel>
+            </DataTemplate>
+        </UserControl.Resources>
+        <Grid>
+            <Grid>
+                <ListView Name="AdvisersListview" 
+                  ItemsSource="{x:Bind Advisers}"
+                  ItemTemplate="{StaticResource AdvisersListedTemplate}"
+                  IsItemClickEnabled="True"
+                  ItemClick="AdvisersListview_ItemClick" Margin="0,88,0,0"/>
+            </Grid>
+        </Grid>
+    </UserControl>
+</Page>

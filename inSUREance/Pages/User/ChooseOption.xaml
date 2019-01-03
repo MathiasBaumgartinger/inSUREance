@@ -18,10 +18,10 @@
             <StackPanel Tag="InsuranceOverview">
                 <TextBlock Text="See Insurances" Margin="0,0,0,0" HorizontalAlignment="Left" Padding="20,20,20,20"/>
             </StackPanel>
-            <StackPanel>
+            <StackPanel Tag="Questions">
                 <TextBlock Text="My Questions" Margin="0,0,0,0" HorizontalAlignment="Left" Padding="20,20,20,20"/>
             </StackPanel>
-            <StackPanel>
+            <StackPanel Tag="Rating">
                 <TextBlock Text="Rate Insurance/Provider" Margin="0,0,0,0" HorizontalAlignment="Left" Padding="20,20,20,20"/>
             </StackPanel>
         </ListView>

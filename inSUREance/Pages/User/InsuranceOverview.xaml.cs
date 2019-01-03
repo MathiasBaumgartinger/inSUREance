@@ -79,11 +79,6 @@ namespace inSUREance.Pages.User
             this.Frame.Navigate(typeof(DetailedInsurance), clickedInsurance);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ChooseOption));
-        }
-
         private void Types_ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             clickedItem = (InsuranceType)e.ClickedItem;
@@ -97,6 +92,11 @@ namespace inSUREance.Pages.User
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ChooseOption));
         }
     }   
 }

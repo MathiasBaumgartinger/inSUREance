@@ -38,9 +38,10 @@ namespace inSUREance
             // TODO: Database stuff
             if (username.Equals("user") && password.Equals("pw"))
             {
-                User.Name = username;
-                User.Birthday = new DateTime(1997, 11, 22);
-                User.Address = "1150 Wien";
+                GlobalVariables.User.Name = username;
+                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                GlobalVariables.User.Address = "1150 Wien";
+
                 this.Frame.Navigate(typeof(ChooseOption));
             }
             else if (username.Equals("admin") && password.Equals("pw"))
