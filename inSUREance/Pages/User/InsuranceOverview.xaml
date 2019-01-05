@@ -25,7 +25,7 @@
 
         <DataTemplate x:Key="InsuranceTypeTemplate" x:DataType="data:InsuranceType">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
-                <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" />
+                <TextBlock Text="{x:Bind category}" HorizontalAlignment="Left" FontSize="16" />
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>

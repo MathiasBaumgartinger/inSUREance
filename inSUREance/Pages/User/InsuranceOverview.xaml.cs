@@ -82,8 +82,8 @@ namespace inSUREance.Pages.User
         private void Types_ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             clickedItem = (InsuranceType)e.ClickedItem;
-            Insurances = InsurManager.GetInsurances(clickedItem.Name);
-            DisplayType = clickedItem.Name;
+            Insurances = InsurManager.GetInsurances(clickedItem.category);
+            DisplayType = clickedItem.category;
 
            // this.contentControl.Content = new UserControl();
         }

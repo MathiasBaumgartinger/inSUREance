@@ -38,7 +38,6 @@ namespace inSUREance.Pages.User
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Insurance newInsurance = (Insurance)e.Parameter;
-            Debug.WriteLine(newInsurance.Name);
             displayInsurance.Add(newInsurance);
         }
 

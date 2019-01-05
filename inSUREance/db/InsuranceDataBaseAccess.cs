@@ -41,6 +41,7 @@ namespace inSUREance.db
             catch (SqlException ex)
             {
                 Debug.WriteLine("Error while connecting to database");
+                Debug.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -69,22 +70,22 @@ namespace inSUREance.db
         {
             SqlCommand command = stmt.GetCommand();
             command.Connection = connection;
-
-            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
-            command.Transaction = transaction;
-
             command.Prepare();
+
+            //SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            //command.Transaction = transaction;
 
             try
             {
                 int rows = command.ExecuteNonQuery();
-                transaction.Commit();
+                //transaction.Commit();
 
                 return rows;
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
+                //transaction.Rollback();
+                Debug.WriteLine(ex.ToString());
                 return -1;
             }
         }
@@ -93,22 +94,22 @@ namespace inSUREance.db
         {
             SqlCommand command = stmt.GetCommand();
             command.Connection = connection;
-
-            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
-            command.Transaction = transaction;
-
             command.Prepare();
+
+            //SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            //command.Transaction = transaction;
 
             try
             {
                 SqlDataReader reader = command.ExecuteReader();
-                transaction.Commit();
+                //transaction.Commit();
 
                 return reader;
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
+                //transaction.Rollback();
+                Debug.WriteLine(ex.ToString());
                 return null;
             }
         }
