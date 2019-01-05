@@ -11,16 +11,16 @@ using Windows.UI.ViewManagement;
 
 namespace inSUREance.db
 {
-    public class DataBaseAccess : IDataBaseAccess, IDisposable
+    public class InsuranceDataBaseAccess : IDataBaseAccess, IDisposable
     {
         private string connectionString;
         private readonly SqlConnection connection;
 
-        public DataBaseAccess(string server, string db, string user, string pwd)
+        public InsuranceDataBaseAccess(string server, string user, string pwd)
         {
             connectionString = "";
             connectionString += "Data Source=" + server + ";";
-            connectionString += "Initial Catalog=" + db + ";";
+            connectionString += "Initial Catalog=VersicherungsDB;";
             connectionString += "User id=" + user + ";";
             connectionString += "Password=" + pwd + ";";
 
@@ -61,6 +61,55 @@ namespace inSUREance.db
             {
                 Debug.WriteLine("Error while disconnecting from database");
                 return false;
+            }
+        }
+
+        public int ExecutePreparedStatementNonQuery(IPreparedStatement stmt,
+            IsolationLevel isolationLevel = IsolationLevel.Serializable)
+        {
+            SqlCommand command = stmt.GetCommand();
+            command.Connection = connection;
+
+            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            command.Transaction = transaction;
+
+            command.Prepare();
+
+            try
+            {
+                int rows = command.ExecuteNonQuery();
+                transaction.Commit();
+
+                return rows;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                return -1;
+            }
+        }
+
+        public SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt, IsolationLevel isolationLevel = IsolationLevel.Serializable)
+        {
+            SqlCommand command = stmt.GetCommand();
+            command.Connection = connection;
+
+            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            command.Transaction = transaction;
+
+            command.Prepare();
+
+            try
+            {
+                SqlDataReader reader = command.ExecuteReader();
+                transaction.Commit();
+
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                return null;
             }
         }
 
