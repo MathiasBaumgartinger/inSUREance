@@ -38,7 +38,7 @@
                 <GridView ItemsSource="{x:Bind displayInsurance}"
                           ItemTemplate="{StaticResource displayInsuranceTemplate}" 
                           IsItemClickEnabled="False"/>
-                <Button Content="make insurance" HorizontalAlignment="Left" Margin="833,457,0,0" VerticalAlignment="Top" Height="50" Width="209"/>
+                <Button Tag="MakeInsur" Content="make insurance" HorizontalAlignment="Left" Margin="833,457,0,0" VerticalAlignment="Top" Height="50" Width="209" Click="MakeInsurance"/>
             </Grid>
         </Grid>
     </Grid>

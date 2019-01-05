@@ -8,49 +8,51 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <UserControl>
-        <UserControl.Resources>
-            <DataTemplate x:Key="MessageQuestionTemplate" x:DataType="data:Message">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
-                    <Image HorizontalAlignment="Left" Height="78" Margin="10,48,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="0.574,0.55"/>
-                    <StackPanel Margin="10,10,10,10">
-                        <Border Background="BlanchedAlmond">
-                            <TextBlock HorizontalAlignment="Left" Margin="48,48,0,0" Text="TextBox" VerticalAlignment="Top" Width="1044" Height="78" />
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-            </DataTemplate>
 
-            <DataTemplate x:Key="MessageResponseTemplate" x:DataType="data:Message">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
-                    <Image Source="{Binding Path=Picture}" HorizontalAlignment="Left" Height="78" Margin="1059,153,0,0" VerticalAlignment="Top" Width="87"/>
-                    <StackPanel Margin="20,20,20,20">
-                        <Border Background="CornflowerBlue">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,153,0,0" Text="{x:Bind text}" VerticalAlignment="Top" Width="1044" Height="78"/>
-                        </Border>
-                    </StackPanel>
+    <UserControl.Resources>
+        <DataTemplate x:Key="MessageQuestionTemplate" x:DataType="data:Message">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
+                <Image Source="{Binding Path=Picture}" HorizontalAlignment="Left" Height="78" Margin="10,48,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="0.574,0.55"/>
+                <StackPanel Margin="10,10,10,10">
+                    <Border Background="BlanchedAlmond">
+                        <TextBlock HorizontalAlignment="Left" Margin="48,48,0,0" Text="{x:Bind text}" VerticalAlignment="Top" Width="1044" Height="78" />
+                    </Border>
                 </StackPanel>
-            </DataTemplate>
-        </UserControl.Resources>
-        <Grid>
-            <Image Source="{Binding Path=Picture}" HorizontalAlignment="Left" Height="100" Margin="156,102,0,0" VerticalAlignment="Top" Width="100"/>
-            <TextBlock FontSize="40" HorizontalAlignment="Left" Margin="256,132,0,0" Text="{Binding Path=AdvName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="2048"/>
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="285,308,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="536*"/>
-                    <ColumnDefinition Width="659*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="100" />
-                </Grid.RowDefinitions>
+            </StackPanel>
+        </DataTemplate>
 
-                <ListView ItemsSource="{x:Bind messages}"
-                  ItemTemplate="{StaticResource MessageResponseTemplate}"
+        <DataTemplate x:Key="MessageResponseTemplate" x:DataType="data:Message">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
+                <Image Source="{Binding Path=Picture}" HorizontalAlignment="Left" Height="78" Margin="1059,153,0,0" VerticalAlignment="Top" Width="87"/>
+                <StackPanel Margin="20,20,20,20">
+                    <Border Background="CornflowerBlue">
+                        <TextBlock HorizontalAlignment="Left" Margin="10,153,0,0" Text="{x:Bind text}" VerticalAlignment="Top" Width="1044" Height="78"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Image Source="{Binding Path=Picture}" HorizontalAlignment="Left" Height="100" Margin="156,102,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBlock FontSize="40" HorizontalAlignment="Left" Margin="256,132,0,0" Text="{Binding Path=AdvName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="2048"/>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="309,308,20,46">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="329*"/>
+                <ColumnDefinition Width="866*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{x:Bind messages}"
+                  ItemTemplate="{StaticResource MessageQuestionTemplate}"
                   IsItemClickEnabled="True"
-                  Margin="0,10,0,50" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                  Margin="0,10,0,67" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <TextBox HorizontalAlignment="Left" Margin="132,31,0,0" Grid.Row="1" Text="Write Message" TextWrapping="Wrap" VerticalAlignment="Top" Width="1039" Height="57" Grid.ColumnSpan="2"/>
+            <Button Content="Send" HorizontalAlignment="Left" Margin="132,101,0,0" VerticalAlignment="Top" Width="149" Grid.Row="1"/>
 
-            </Grid>
         </Grid>
-    </UserControl>
+    </Grid>
+
 </Page>

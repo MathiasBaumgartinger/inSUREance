@@ -52,8 +52,6 @@ namespace inSUREance.Pages.User
 
             AdvName = clickedAdviser.Name;
             Picture = Directory.GetCurrentDirectory() + "\\Assets\\Pictures\\" + AdvName + ".jpg";
-
-            System.Diagnostics.Debug.WriteLine(Picture);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

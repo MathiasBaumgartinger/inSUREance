@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="inSUREance.Pages.User.RateInsurance"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:inSUREance.Pages.User"
+    xmlns:data="using:inSUREance.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="131.988" Width="410.333">
+    <UserControl>
+        <Grid>
+            <TextBlock FontSize="20" HorizontalAlignment="Left" Margin="30,20,0,0" Text="Rate this insurance" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBlock FontSize="11" HorizontalAlignment="Left" Margin="30,0,0,0" Text="{Binding Path=RatingStarPicTwo}" TextWrapping="Wrap" VerticalAlignment="Top" Height="47"/>
+            <Button HorizontalAlignment="Left" Height="24" Margin="35,58,0,0" VerticalAlignment="Top" Width="25" Click="oneStar">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Path=RatingStarPicOne}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="26" Margin="80,57,0,0" VerticalAlignment="Top" Width="25" Click="twoStars">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Path=RatingStarPicTwo}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="24" Margin="125,57,0,0" VerticalAlignment="Top" Width="25" Click="threeStars">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Path=RatingStarPicThree}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="25" Margin="170,57,0,0" VerticalAlignment="Top" Width="25" Click="fourStars">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Path=RatingStarPicFour}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button HorizontalAlignment="Left" Height="25" Margin="215,57,0,0" VerticalAlignment="Top" Width="25" Click="fiveStars">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Path=RatingStarPicFive}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="316,90,0,0" VerticalAlignment="Top" Height="32" Width="79" Click="Cancel"/>
+
+        </Grid>
+    </UserControl>
+</Page>
