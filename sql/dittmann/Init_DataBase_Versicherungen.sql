@@ -9,21 +9,20 @@ SELECT @Current_DateFormat = (select s.date_format from sys.dm_exec_sessions s w
 PRINT('SYS-DATEFORMAT NOW: '+@Current_DateFormat)
 GO
 
--- Create login
-if not EXISTS
-    (select * from sys.sql_logins where name = 'DB_User')
+--CREATE SQL-SERVER LOGIN
+if EXISTS
+    (select * from sys.sql_logins where name = 'SQL_LOGIN')
 begin
-    create login DB_User with PASSWORD = 'MasterPW'
+	DROP LOGIN SQL_LOGIN
 END
+GO
+if not EXISTS
+    (select * from sys.sql_logins where name = 'SQL_LOGIN')
+begin
+    create login SQL_LOGIN with PASSWORD = 'SQL_MasterPW'
+END
+GO
 
--- Create user
-drop user if exists DB_User
-CREATE USER DB_User FOR LOGIN DB_User
-
--- default access for every user
-grant 
-connect, insert, update, delete, select, alter, execute
-to DB_User
 
 IF EXISTS(select * from sys.databases where name='VersicherungsDB')
 	DROP DATABASE VersicherungsDB
@@ -34,6 +33,21 @@ GO
 USE VersicherungsDB
 GO
 PRINT('DATABASE "VersicherungsDB" CREATED')
+
+-- Create SQL-SERVER USER
+drop user if exists DB_User
+CREATE USER DB_User FOR LOGIN SQL_LOGIN
+GO
+
+--exec sp_change_users_login 'Auto_Fix', 'DB_User'
+--go
+
+-- default access for the user
+grant 
+connect, insert, update, delete, select, alter, execute
+to DB_User
+Go
+PRINT('DB-User Created')
 
 DROP TABLE IF EXISTS dbo.USERS
 DROP TABLE IF EXISTS dbo.ANBIETER
