@@ -9,6 +9,22 @@ SELECT @Current_DateFormat = (select s.date_format from sys.dm_exec_sessions s w
 PRINT('SYS-DATEFORMAT NOW: '+@Current_DateFormat)
 GO
 
+-- Create login
+if not EXISTS
+    (select * from sys.sql_logins where name = 'DB_User')
+begin
+    create login DB_User with PASSWORD = 'MasterPW'
+END
+
+-- Create user
+drop user if exists DB_User
+CREATE USER DB_User FOR LOGIN DB_User
+
+-- default access for every user
+grant 
+connect, insert, update, delete, select, alter, execute
+to DB_User
+
 IF EXISTS(select * from sys.databases where name='VersicherungsDB')
 	DROP DATABASE VersicherungsDB
 	PRINT('OLD "VersicherungsDB" DATABASE DELETED')

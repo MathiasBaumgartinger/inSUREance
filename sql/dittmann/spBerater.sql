@@ -20,6 +20,9 @@ AS
 		DECLARE @tmp_anb_id INT = (SELECT ID FROM ANBIETER WHERE NAME = @anbieter_name)
 		IF @tmp_anb_id = NULL
 			throw 60000, 'anbieter not existing', 1
+
+		UPDATE USERS SET IS_BERATER = 1
+		WHERE USERS.ID = @tmp_user_id
 		
 		INSERT INTO BERATER (FK_ID_USERS,FK_ID_ANB)
 		VALUES (@tmp_user_id,@tmp_anb_id)
