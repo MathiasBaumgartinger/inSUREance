@@ -12,7 +12,7 @@ namespace inSUREance.db
     {
         protected SqlCommand command = new SqlCommand();
 
-        public abstract void Prepare();
+        public abstract void Prepare(SqlConnection connection);
 
         public SqlCommand GetCommand()
         {

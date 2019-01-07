@@ -14,7 +14,7 @@ namespace inSUREance.db
     public class InsuranceDataBaseAccess : IDataBaseAccess, IDisposable
     {
         private string connectionString;
-        private readonly SqlConnection connection;
+        public SqlConnection connection { get; }
 
         public InsuranceDataBaseAccess(string server, string user, string pwd)
         {
@@ -65,51 +65,102 @@ namespace inSUREance.db
             }
         }
 
-        public int ExecutePreparedStatementNonQuery(IPreparedStatement stmt,
-            IsolationLevel isolationLevel = IsolationLevel.Serializable)
+        public int ExecutePreparedStatementNonQuery(IPreparedStatement stmt)
         {
             SqlCommand command = stmt.GetCommand();
-            command.Connection = connection;
-            command.Prepare();
-
-            //SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
-            //command.Transaction = transaction;
 
             try
             {
                 int rows = command.ExecuteNonQuery();
-                //transaction.Commit();
-
                 return rows;
             }
             catch (Exception ex)
             {
-                //transaction.Rollback();
                 Debug.WriteLine(ex.ToString());
                 return -1;
             }
         }
 
-        public SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt, IsolationLevel isolationLevel = IsolationLevel.Serializable)
+        public int ExecutePreparedStatementNonQuery(IPreparedStatement stmt,
+            IsolationLevel isolationLevel)
         {
             SqlCommand command = stmt.GetCommand();
-            command.Connection = connection;
-            command.Prepare();
 
-            //SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
-            //command.Transaction = transaction;
+            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            command.Transaction = transaction;
+
+            try
+            {
+                int rows = command.ExecuteNonQuery();
+                transaction.Commit();
+
+                return rows;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+
+                try
+                {
+                    transaction.Rollback();
+                }
+                catch (Exception ex2)
+                {
+                    Debug.WriteLine(ex2.ToString());
+                    return -1;
+                }
+
+                return -1;
+            }
+        }
+
+        public SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt)
+        {
+            SqlCommand command = stmt.GetCommand();
 
             try
             {
                 SqlDataReader reader = command.ExecuteReader();
+
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt, IsolationLevel isolationLevel)
+        {
+            SqlCommand command = stmt.GetCommand();
+
+            SqlTransaction transaction = connection.BeginTransaction(isolationLevel);
+            command.Transaction = transaction;
+
+            SqlDataReader reader;
+
+            try
+            {
+                reader = command.ExecuteReader();
                 //transaction.Commit();
 
                 return reader;
             }
             catch (Exception ex)
             {
-                //transaction.Rollback();
                 Debug.WriteLine(ex.ToString());
+
+                try
+                {
+                   //transaction.Rollback();
+                }
+                catch (Exception ex2)
+                {
+                    Debug.WriteLine(ex2.ToString());
+                    return null;
+                }
+
                 return null;
             }
         }

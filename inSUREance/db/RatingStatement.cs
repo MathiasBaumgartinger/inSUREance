@@ -23,7 +23,7 @@ namespace inSUREance.db
             this.stars = stars;
         }
 
-        public override void Prepare()
+        public override void Prepare(SqlConnection connection)
         {
             command.CommandText = "EXEC add_rating_for_vendor @userid, @vendorid, @stars";
 
@@ -39,6 +39,10 @@ namespace inSUREance.db
             command.Parameters.Add(useridParam);
             command.Parameters.Add(vendoridParam);
             command.Parameters.Add(starsParam);
+
+            command.Connection = connection;
+            
+            command.Prepare();
         }
     }
 }

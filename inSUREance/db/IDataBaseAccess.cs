@@ -13,9 +13,17 @@ namespace inSUREance.db
         bool Open();
         bool Close();
 
-        int ExecutePreparedStatementNonQuery(IPreparedStatement stmt,
-            IsolationLevel isolationLevel = IsolationLevel.Serializable);
+        //without transaction, returns num of rows changed
+        int ExecutePreparedStatementNonQuery(IPreparedStatement stmt);
 
-        SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt, IsolationLevel isolationLevel = IsolationLevel.Serializable);
+        //with transaction, returns num of rows changed
+        int ExecutePreparedStatementNonQuery(IPreparedStatement stmt,
+            IsolationLevel isolationLevel);
+
+        //without transaction, returns sqlreader or null
+        SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt);
+
+        //with transaction, returns sqlreader or null
+        SqlDataReader ExecutePreparedStatementReader(IPreparedStatement stmt, IsolationLevel isolationLevel);
     }
 }

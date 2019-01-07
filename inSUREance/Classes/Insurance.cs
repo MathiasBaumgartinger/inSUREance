@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
- 
 using inSUREance.db;
 
 namespace inSUREance.Classes
@@ -69,10 +68,10 @@ namespace inSUREance.Classes
                 {
                     if (db.Open())
                     {
-                        ProductStatements stmt = new ProductStatements(type);
-                        stmt.Prepare();
+                        ListProductStatement stmt = new ListProductStatement(type);
+                        stmt.Prepare(db.connection);
 
-                        using (var reader = db.ExecutePreparedStatementReader(stmt, IsolationLevel.ReadCommitted))
+                        using (var reader = db.ExecutePreparedStatementReader(stmt))
                         {
                             if (reader != null && reader.HasRows)
                             {

@@ -101,7 +101,7 @@
     <Compile Include="Classes\Message.cs" />
     <Compile Include="db\IDataBaseAccess.cs" />
     <Compile Include="db\InsuranceDataBaseAccess.cs" />
-    <Compile Include="db\ProductStatements.cs" />
+    <Compile Include="db\ListProductStatement.cs" />
     <Compile Include="db\IPreparedStatement.cs" />
     <Compile Include="db\RatingStatement.cs" />
     <Compile Include="GlobalVariables.cs" />

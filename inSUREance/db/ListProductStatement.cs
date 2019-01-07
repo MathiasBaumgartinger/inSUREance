@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace inSUREance.db
 {
-    public class ProductStatements : IPreparedStatement
+    public class ListProductStatement : IPreparedStatement
     {
         private int categoryid;
 
-        public ProductStatements(int categoryid)
+        public ListProductStatement(int categoryid)
         {
             this.categoryid = categoryid;
         }
 
-        public override void Prepare()
+        public override void Prepare(SqlConnection connection)
         {
             command.CommandText = "EXEC list_products_by_category @categoryid";
 
@@ -25,14 +25,22 @@ namespace inSUREance.db
             categoryidParam.Value = categoryid;
 
             command.Parameters.Add(categoryidParam);
+
+            command.Connection = connection;
+
+            command.Prepare();
         }
     }
 
     public class ListCategoryStatement : IPreparedStatement
     {
-        public override void Prepare()
+        public override void Prepare(SqlConnection connection)
         {
             command.CommandText = "SELECT * FROM PRODUKT_KATEGORIE";
+
+            command.Connection = connection;
+
+            command.Prepare();
         }
     }
 }

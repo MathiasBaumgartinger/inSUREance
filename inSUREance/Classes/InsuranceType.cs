@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,15 +26,15 @@ namespace inSUREance.Classes
             {
                 List<InsuranceType> insuranceTypes = new List<InsuranceType>();
 
-                using (var connection = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+                using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
                     GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
                 {
-                    if (connection.Open())
+                    if (db.Open())
                     {
                         ListCategoryStatement stmt = new ListCategoryStatement();
-                        stmt.Prepare();
+                        stmt.Prepare(db.connection);
 
-                        using (var reader = connection.ExecutePreparedStatementReader(stmt))
+                        using (var reader = db.ExecutePreparedStatementReader(stmt, IsolationLevel.ReadCommitted))
                         {
                             if (reader != null && reader.HasRows)
                             {
