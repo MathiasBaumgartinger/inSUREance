@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using inSUREance.Classes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using inSUREance.db;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -48,22 +49,25 @@ namespace inSUREance.Pages.User
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Button clicked user: " + name + " updated!");
-
-            GlobalVariables.User.Name = UsernameBox.Text;
-            string date = BirthdayBox.Text;
-            try
+            using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+                GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
             {
-                GlobalVariables.User.Birthday = Convert.ToDateTime(date);
-            }
-            catch(InvalidDataException exc)
-            {
-                System.Diagnostics.Debug.WriteLine(exc.StackTrace);
-            }
-            GlobalVariables.User.Address = AddressBox.Text;
-            
-            // TODO: Update database
+                if (db.Open())
+                {
+                    //TODO: pass user data to stmt
+                    IPreparedStatement stmt = new UpdateUserStatement("Max Mustermann", "Password123", DateTime.UtcNow, "Wolfsburg");
+                    stmt.Prepare(db.connection);
 
+                    if (db.ExecutePreparedStatementNonQuery(stmt) == 1)
+                    {
+                        //TODO: print success
+                    }
+                    else
+                    {
+                        //TODO: print error
+                    }
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -101,9 +101,10 @@
     <Compile Include="Classes\Message.cs" />
     <Compile Include="db\IDataBaseAccess.cs" />
     <Compile Include="db\InsuranceDataBaseAccess.cs" />
-    <Compile Include="db\ListProductStatement.cs" />
     <Compile Include="db\IPreparedStatement.cs" />
+    <Compile Include="db\ProductStatement.cs" />
     <Compile Include="db\RatingStatement.cs" />
+    <Compile Include="db\UserStatement.cs" />
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

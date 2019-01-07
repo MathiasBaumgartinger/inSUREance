@@ -36,7 +36,7 @@ namespace inSUREance.db
     {
         public override void Prepare(SqlConnection connection)
         {
-            command.CommandText = "SELECT * FROM PRODUKT_KATEGORIE";
+            command.CommandText = "EXEC list_all_categories";
 
             command.Connection = connection;
 
