@@ -31,10 +31,10 @@ namespace inSUREance
             public static readonly string USERNAME = "ricopc";
             public static readonly string PASSWORD = "Password123";
 #elif USR_MATHIAS
-            public static readonly string SERVERNAME = ".\\SQLEXPRESS02";
+            public static readonly string SERVERNAME = ".\\SQLEXPRESS01";
             public static readonly string DBNAME = "VersicherungsDB";
-            public static readonly string USERNAME = "ricopc";
-            public static readonly string PASSWORD = "Password123";
+            public static readonly string USERNAME = "mathias";
+            public static readonly string PASSWORD = "pfad1234";
 #elif USR_DAVID
             public static readonly string SERVERNAME = ".\\SQLEXPRESS02";
             public static readonly string DBNAME = "VersicherungsDB";
