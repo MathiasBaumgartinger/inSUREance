@@ -55,9 +55,30 @@ namespace inSUREance.db
 
     public class LoginUserStatement : IPreparedStatement
     {
+        private readonly string username;
+        private readonly string password;
+
+        public LoginUserStatement(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
+
         public override void Prepare(SqlConnection connection)
         {
-            
+            command.Connection = connection;
+
+            command.CommandText = "EXEC check_user_login @username, @password";
+
+            SqlParameter usernameParam = new SqlParameter("@username", SqlDbType.VarChar, 30);
+            usernameParam.Value = username;
+            SqlParameter passwordParam = new SqlParameter("@password", SqlDbType.VarChar, 30);
+            passwordParam.Value = password;
+
+            command.Parameters.Add(usernameParam);
+            command.Parameters.Add(passwordParam);
+
+            command.Prepare();
         }
     }
 }

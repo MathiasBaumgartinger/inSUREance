@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using inSUREance.Pages;
 using inSUREance.Pages.User;
 using inSUREance.Classes;
+using inSUREance.db;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -35,7 +36,7 @@ namespace inSUREance
             string username = userInput.Text;
             string password = pwInput.Text;
 
-            // TODO: Database stuff
+#if DEBUG
             if (username.Equals("user") && password.Equals("pw"))
             {
                 GlobalVariables.User.Name = username;
@@ -60,7 +61,65 @@ namespace inSUREance
             {
                 allertMessage.Text = "Wrong Username or Password";
             }
+#else
+            using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+                GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
+            {
+                if (db.Open())
+                {
+                    IPreparedStatement stmt = new LoginUserStatement(username, password);
+                    stmt.Prepare(db.connection);
 
+                    using (var reader = db.ExecutePreparedStatementReader(stmt))
+                    {
+                        if (reader != null && reader.HasRows && reader.FieldCount == 1)
+                        {
+                            reader.Read();
+                            //int usertype = reader.GetBoolean(0);
+
+                            //der spass is nur, solange die stored procedure nur true/false returned
+                            bool isuser = reader.GetBoolean(0);
+                            if (isuser)
+                            {
+                                GlobalVariables.User.Name = username;
+                                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                                GlobalVariables.User.Address = "1150 Wien";
+
+                                this.Frame.Navigate(typeof(ChooseOption));
+                            }
+                            else
+                            {
+                                allertMessage.Text = "Wrong Username or Password";
+                            }
+
+                            //switch (usertype)
+                            //{
+                            //    case 0:
+                            //        //TODO: invalid user
+                            //        break;
+                            //    case 1:
+                            //        //TODO: valid user
+                            //        GlobalVariables.User.Name = username;
+                            //        GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                            //        GlobalVariables.User.Address = "1150 Wien";
+
+                            //        this.Frame.Navigate(typeof(ChooseOption));
+                            //        break;
+                            //    case 2:
+                            //        //TODO: consultant
+                            //        break;
+                            //    case 3:
+                            //        //TODO: admin
+                            //        break;
+                            //    default:
+                            //        //TODO: invalid user
+                            //        break;
+                        //}
+                    }
+                    }
+                }
+            }
+#endif
         }
     }
 }
