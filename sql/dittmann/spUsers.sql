@@ -19,7 +19,7 @@ AS
 		IF @user_name = '' or @password='' or @birthday = '1900-01-01' or @birthday = NULL or @wohnort='' or @is_admin = NULL or @is_berater = NULL
 			THROW 60000, 'one of the given variables is null or empty', 1
 
-		IF @password LIKE '%[^A-Z0-9]%'
+		IF @password LIKE '%[^a-zA-Z0-9]%'
 			THROW 60000, 'only letters and numbers allowed in a password', 1
 		IF LEN(@password) < 1 or LEN(@password) > 30 
 			THROW 60000, 'minimum 1, max 30 characters in pw allowed', 1
@@ -52,7 +52,7 @@ AS
 		IF @user_name = '' or @password='' or @birthday = '1900-01-01' or @birthday = NULL or @wohnort='' or @is_admin = NULL or @is_berater = NULL
 			THROW 60000, 'one of the given variables is null or empty', 1
 
-		IF @password LIKE '%[^A-Z0-9]%'
+		IF @password LIKE '%[^a-zA-Z0-9]%'
 			THROW 60000, 'only letters and numbers allowed in a password', 1
 		IF LEN(@password) < 1 or LEN(@password) > 30 
 			THROW 60000, 'minimum 1, max 30 characters in password allowed', 1
@@ -80,23 +80,37 @@ GO
 CREATE PROCEDURE check_user_login @user_name VARCHAR(30), @password VARCHAR(30)
 AS
 	BEGIN
-	SET NOCOUNT ON
+		SET NOCOUNT ON
+		BEGIN TRANSACTION
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 
-	-- 0 failure, 1 user, 2 adviser, 3 admin
-	--SELECT 
-	--	CASE 
-	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_ADMIN=1)
-	--			THEN 3
-	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_BERATER=1)
-	--			THEN 2
-	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password))
-	--			THEN 1
-	--		ELSE 0
+		BEGIN TRY
+			IF LEN(@user_name) > 30 OR LEN(@user_name) < 1
+				THROW 60000, 'username must have at least 1 letter, max 30 letters', 1
+			IF @password LIKE '%[^a-zA-Z0-9]%'
+				THROW 60000, 'only letters and numbers allowed in a password', 1
+			IF LEN(@password) < 1 or LEN(@password) > 30 
+				THROW 60000, 'minimum 1, max 30 characters in password allowed', 1
+			-- 0 failure, 1 user, 2 adviser, 3 admin
+			--SELECT 
+			--	CASE 
+			--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_ADMIN=1)
+			--			THEN 3
+			--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_BERATER=1)
+			--			THEN 2
+			--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password))
+			--			THEN 1
+			--		ELSE 0
 
-	SELECT NAME, GEBURTSTAG, WOHNORT, IS_BERATER, IS_ADMIN
-	FROM USERS
-	WHERE NAME = @user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password)
-
+			SELECT NAME, GEBURTSTAG, WOHNORT, IS_BERATER, IS_ADMIN
+			FROM USERS
+			WHERE NAME = @user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password)
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			PRINT ERROR_MESSAGE()
+			ROLLBACK TRANSACTION
+		END CATCH
 	END
 GO
 
