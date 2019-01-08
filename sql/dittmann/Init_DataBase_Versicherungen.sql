@@ -23,6 +23,24 @@ begin
 END
 GO
 
+IF EXISTS (select * from sys.server_triggers where name = 'safety_trigger_db')
+BEGIN
+	DISABLE TRIGGER safety_trigger_db ON ALL SERVER
+	PRINT('SAFETY TRIGGER #DATABASE DISABLED')
+END
+GO
+
+USE VersicherungsDB
+GO
+IF EXISTS (select * from sys.triggers where name = 'safety_trigger_table')
+BEGIN
+	DISABLE TRIGGER safety_trigger_table ON DATABASE
+	PRINT('SAFETY TRIGGER #TABLE DISABLED')
+END
+GO
+USE master
+GO
+
 
 IF EXISTS(select * from sys.databases where name='VersicherungsDB')
 	DROP DATABASE VersicherungsDB
@@ -214,3 +232,22 @@ GO
 --GO
 
 PRINT('TABLES CREATED')
+GO
+
+
+USE master
+Go
+IF EXISTS (select * from sys.server_triggers where name = 'safety_trigger_db')
+BEGIN
+	ENABLE TRIGGER safety_trigger_db ON ALL SERVER
+	PRINT('SAFETY TRIGGER #DATABASE ENABLED')
+END
+GO
+USE VersicherungsDB
+GO
+IF EXISTS (select * from sys.triggers where name = 'safety_trigger_table')
+BEGIN
+	ENABLE TRIGGER safety_trigger_table ON DATABASE
+	PRINT('SAFETY TRIGGER #TABLE ENABLED')
+END
+GO
