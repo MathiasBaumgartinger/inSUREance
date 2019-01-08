@@ -26,8 +26,9 @@ namespace inSUREance.db
         public override void Prepare(SqlConnection connection)
         {
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
 
-            command.CommandText = "EXEC update_user @user_name, @password, @birthday, @wohnort, @is_admin, @is_berater";
+            command.CommandText = "update_user";
 
             SqlParameter usernameParam = new SqlParameter("@user_name", SqlDbType.VarChar, 30);
             usernameParam.Value = username;
@@ -67,10 +68,11 @@ namespace inSUREance.db
         public override void Prepare(SqlConnection connection)
         {
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
 
-            command.CommandText = "EXEC check_user_login @username, @password";
+            command.CommandText = "check_user_login";
 
-            SqlParameter usernameParam = new SqlParameter("@username", SqlDbType.VarChar, 30);
+            SqlParameter usernameParam = new SqlParameter("@user_name", SqlDbType.VarChar, 30);
             usernameParam.Value = username;
             SqlParameter passwordParam = new SqlParameter("@password", SqlDbType.VarChar, 30);
             passwordParam.Value = password;
