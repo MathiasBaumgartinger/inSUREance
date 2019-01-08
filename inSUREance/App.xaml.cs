@@ -2,8 +2,11 @@
 using inSUREance.Pages.User;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -16,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using inSUREance.db;
 
 namespace inSUREance
 {
@@ -32,6 +36,32 @@ namespace inSUREance
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            //const string connectionString =
+            //    @"SERVER = DESKTOP-8NDANF5\SQLEXPRESS02; DATABASE = VersicherungsDB; USER ID = ricopc; PASSWORD=Password123; Integrated Security=SSPI";
+
+            //HateMicrosoft ms = new HateMicrosoft();
+            //ms.keepHating();
+
+            //SqlConnectionStringBuilder sqlConnBuilder = new SqlConnectionStringBuilder()
+            //{
+            //    DataSource = @".\SQLEXPRESS02",
+            //    InitialCatalog = "VersicherungsDB",
+            //    UserID = "ricopc",
+            //    Password = "Password123"
+            //};
+
+            //using (var connection = new SqlConnection(connectionString))
+            //{
+            //    try
+            //    {
+            //        connection.Open();
+            //    }
+            //    catch (SqlException ex)
+            //    {
+            //        Debug.WriteLine(ex.ToString());
+            //    }
+            //}
         }
 
         /// <summary>
@@ -49,7 +79,7 @@ namespace inSUREance
             {
                 // Frame erstellen, der als Navigationskontext fungiert und zum Parameter der ersten Seite navigieren
                 rootFrame = new Frame();
-
+                
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
