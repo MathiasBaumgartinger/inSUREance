@@ -37,29 +37,15 @@ namespace inSUREance
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            //const string connectionString =
-            //    @"SERVER = DESKTOP-8NDANF5\SQLEXPRESS02; DATABASE = VersicherungsDB; USER ID = ricopc; PASSWORD=Password123; Integrated Security=SSPI";
-
-            //HateMicrosoft ms = new HateMicrosoft();
-            //ms.keepHating();
-
-            //SqlConnectionStringBuilder sqlConnBuilder = new SqlConnectionStringBuilder()
+            //using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+            //    GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
             //{
-            //    DataSource = @".\SQLEXPRESS02",
-            //    InitialCatalog = "VersicherungsDB",
-            //    UserID = "ricopc",
-            //    Password = "Password123"
-            //};
+            //    if (db.Open())
+            //    {
+            //        IPreparedStatement stmt = new CreateUserStatement("Tom Turbo", "Password123", DateTime.Today, "Wien");
+            //        stmt.Prepare(db.connection);
 
-            //using (var connection = new SqlConnection(connectionString))
-            //{
-            //    try
-            //    {
-            //        connection.Open();
-            //    }
-            //    catch (SqlException ex)
-            //    {
-            //        Debug.WriteLine(ex.ToString());
+            //        int rows = db.ExecutePreparedStatementNonQuery(stmt);
             //    }
             //}
         }

@@ -41,7 +41,7 @@ namespace inSUREance
             string username = userInput.Text;
             string password = pwInput.Text;
 
-#if DEBUG
+#if USR_MATHIAS
             if (username.Equals("user") && password.Equals("pw"))
             {
                 GlobalVariables.User.Name = username;
@@ -92,45 +92,31 @@ namespace inSUREance
                         if (reader != null && reader.HasRows && reader.FieldCount == 1)
                         {
                             reader.Read();
-                            //int usertype = reader.GetBoolean(0);
+                            int usertype = reader.GetInt32(0);
 
-                            //der spass is nur, solange die stored procedure nur true/false returned
-                            bool isuser = reader.GetBoolean(0);
-                            if (isuser)
+                            switch (usertype)
                             {
-                                GlobalVariables.User.Name = username;
-                                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                                GlobalVariables.User.Address = "1150 Wien";
+                                case 0:
+                                    //TODO: invalid user
+                                    break;
+                                case 1:
+                                    //TODO: valid user
+                                    GlobalVariables.User.Name = username;
+                                    GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                                    GlobalVariables.User.Address = "1150 Wien";
 
-                                this.Frame.Navigate(typeof(ChooseOption));
+                                    this.Frame.Navigate(typeof(ChooseOption));
+                                    break;
+                                case 2:
+                                    //TODO: consultant
+                                    break;
+                                case 3:
+                                    //TODO: admin
+                                    break;
+                                default:
+                                    //TODO: invalid user
+                                    break;
                             }
-                            else
-                            {
-                                allertMessage.Text = "Wrong Username or Password";
-                            }
-
-                            //switch (usertype)
-                            //{
-                            //    case 0:
-                            //        allertmessage.text = "wrong username or password";
-                            //        break;
-                            //    case 1:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOption));
-                            //        break;
-                            //    case 2:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOptionAdv));
-                            //        break;
-                            //    case 3:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOptionAdv));
-                            //        break;
-                            //    default:
-                            //        //todo: get data
-                            //        allertmessage.text = "wrong username or password";
-                            //        break;
-                            //}
                         }
                     }
                 }
