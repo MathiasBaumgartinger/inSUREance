@@ -41,44 +41,32 @@ namespace inSUREance
             string username = userInput.Text;
             string password = pwInput.Text;
 
-#if DEBUG
-            if (username.Equals("user") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
 
-                this.Frame.Navigate(typeof(ChooseOption));
-            }
-            else if (username.Equals("admin") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //if (username.Equals("user") && password.Equals("pw"))
+            //{
+            //    GlobalVariables.User.Name = username;
+            //    GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+            //    GlobalVariables.User.Address = "1150 Wien";
 
-                this.Frame.Navigate(typeof(ChooseOptionAdm));
-            }
-            else if (username.Equals("provider") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //    this.Frame.Navigate(typeof(ChooseOption));
+            //}
+            //else if (username.Equals("admin") && password.Equals("pw"))
+            //{
+            //    //this.Frame
+            //}
+            //else if (username.Equals("provider") && password.Equals("pw"))
+            //{
 
-                this.Frame.Navigate(typeof(ChooseOption));
-            }
-            else if (username.Equals("adviser") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //}
+            //else if (username.Equals("adviser") && password.Equals("pw"))
+            //{
 
-                this.Frame.Navigate(typeof(ChooseOptionAdv));
-            }
-            else
-            {
-                allertMessage.Text = "Wrong Username or Password";
-            }
-#else
+            //}
+            //else
+            //{
+            //    allertMessage.Text = "Wrong Username or Password";
+            //}
+
             using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
                 GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
             {
@@ -89,53 +77,43 @@ namespace inSUREance
 
                     using (var reader = db.ExecutePreparedStatementReader(stmt))
                     {
-                        if (reader != null && reader.HasRows && reader.FieldCount == 1)
+                        if (reader != null && reader.HasRows)
                         {
                             reader.Read();
-                            //int usertype = reader.GetBoolean(0);
+                            string name = reader.GetString(0);
+                            DateTime birthday = reader.GetDateTime(1);
+                            string residence = reader.GetString(2);
+                            bool isConsultant = reader.GetBoolean(3);
+                            bool isAdmin = reader.GetBoolean(4);
 
-                            //der spass is nur, solange die stored procedure nur true/false returned
-                            bool isuser = reader.GetBoolean(0);
-                            if (isuser)
+                            if (!isAdmin && !isConsultant)
                             {
-                                GlobalVariables.User.Name = username;
-                                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                                GlobalVariables.User.Address = "1150 Wien";
+                                GlobalVariables.User.Name = name;
+                                GlobalVariables.User.Birthday = birthday;
+                                GlobalVariables.User.Address = residence;
 
                                 this.Frame.Navigate(typeof(ChooseOption));
                             }
-                            else
+                            else if (isAdmin)
                             {
-                                allertMessage.Text = "Wrong Username or Password";
+                                this.frame.navigate(typeof(ChooseOptionAdm));
                             }
-
-                            //switch (usertype)
-                            //{
-                            //    case 0:
-                            //        allertmessage.text = "wrong username or password";
-                            //        break;
-                            //    case 1:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOption));
-                            //        break;
-                            //    case 2:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOptionAdv));
-                            //        break;
-                            //    case 3:
-                            //        //todo: get data
-                            //        this.frame.navigate(typeof(ChooseOptionAdv));
-                            //        break;
-                            //    default:
-                            //        //todo: get data
-                            //        allertmessage.text = "wrong username or password";
-                            //        break;
-                            //}
+                            else if (isConsultant)
+                            {
+                                this.frame.navigate(typeof(ChooseOptionAdv));
+                            }
+                        }
+                        else
+                        {
+                            allertMessage.Text = "Wrong Username or Password";
                         }
                     }
                 }
+                else
+                {
+                    allertMessage.Text = "Wrong Username or Password";
+                }
             }
-#endif
         }
 
         private void Register(object sender, RoutedEventArgs e)

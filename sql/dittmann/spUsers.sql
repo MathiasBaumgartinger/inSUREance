@@ -24,7 +24,7 @@ AS
 		IF LEN(@password) < 1 or LEN(@password) > 30 
 			THROW 60000, 'minimum 1, max 30 characters in pw allowed', 1
 
-		IF LEN(@wohnort) < 5 --(zum testen)
+		IF LEN(@wohnort) < 1 --(zum testen)
 			THROW 60000, 'place of residence not possible', 1
 
 		DECLARE @tmp_name INT = (SELECT count(*) FROM USERS WHERE NAME = @user_name)
@@ -57,7 +57,7 @@ AS
 		IF LEN(@password) < 1 or LEN(@password) > 30 
 			THROW 60000, 'minimum 1, max 30 characters in password allowed', 1
 
-		IF LEN(@wohnort) < 5 --(zum testen)
+		IF LEN(@wohnort) < 1 --(zum testen)
 			THROW 60000, 'place of residence not possible', 1
 
 		DECLARE @tmp int = (SELECT COUNT(*) FROM USERS WHERE NAME = @user_name)
@@ -83,10 +83,20 @@ AS
 	SET NOCOUNT ON
 
 	-- 0 failure, 1 user, 2 adviser, 3 admin
-	SELECT CASE WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password))
-		THEN CAST(1 AS BIT)
-		ELSE CAST(0 AS BIT)
-		END
+	--SELECT 
+	--	CASE 
+	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_ADMIN=1)
+	--			THEN 3
+	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password) AND IS_BERATER=1)
+	--			THEN 2
+	--		WHEN EXISTS(SELECT NULL FROM USERS WHERE NAME=@user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password))
+	--			THEN 1
+	--		ELSE 0
+
+	SELECT NAME, GEBURTSTAG, WOHNORT, IS_BERATER, IS_ADMIN
+	FROM USERS
+	WHERE NAME = @user_name AND PASSWORDHASH=HASHBYTES('SHA2_512',@password)
+
 	END
 GO
 

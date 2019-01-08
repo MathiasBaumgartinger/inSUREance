@@ -19,14 +19,15 @@ namespace inSUREance.db
 
         public override void Prepare(SqlConnection connection)
         {
-            command.CommandText = "EXEC list_products_by_category @categoryid";
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
 
-            SqlParameter categoryidParam = new SqlParameter("@categoryid", SqlDbType.Int);
+            command.CommandText = "list_products_by_category";
+
+            SqlParameter categoryidParam = new SqlParameter("@category_id", SqlDbType.Int);
             categoryidParam.Value = categoryid;
 
             command.Parameters.Add(categoryidParam);
-
-            command.Connection = connection;
 
             command.Prepare();
         }
@@ -36,9 +37,10 @@ namespace inSUREance.db
     {
         public override void Prepare(SqlConnection connection)
         {
-            command.CommandText = "EXEC list_all_categories";
-
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.CommandText = "list_all_categories";
 
             command.Prepare();
         }
