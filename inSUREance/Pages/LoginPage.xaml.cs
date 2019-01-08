@@ -91,11 +91,11 @@ namespace inSUREance
                             }
                             else if (isAdmin)
                             {
-                                //TODO: admin
+                                this.Frame.Navigate(typeof(ChooseOptionAdm));
                             }
                             else if (isConsultant)
                             {
-                                //TODO: consultant
+                                this.Frame.Navigate(typeof(ChooseOptionAdv));
                             }
                         }
                         else
