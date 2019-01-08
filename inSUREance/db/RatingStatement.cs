@@ -25,12 +25,12 @@ namespace inSUREance.db
 
         public override void Prepare(SqlConnection connection)
         {
-            command.CommandText = "EXEC add_rating_for_vendor @userid, @vendorid, @stars";
+            command.CommandText = "add_rating_for_vendor";
 
-            SqlParameter useridParam = new SqlParameter("@userid", SqlDbType.Int);
+            SqlParameter useridParam = new SqlParameter("@user_id", SqlDbType.Int);
             useridParam.Value = userid;
 
-            SqlParameter vendoridParam = new SqlParameter("@vendorid", SqlDbType.Int);
+            SqlParameter vendoridParam = new SqlParameter("@vendor_id", SqlDbType.Int);
             vendoridParam.Value = vendorid;
 
             SqlParameter starsParam = new SqlParameter("@stars", SqlDbType.Int);
