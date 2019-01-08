@@ -16,11 +16,6 @@ using inSUREance.Pages;
 using inSUREance.Pages.User;
 using inSUREance.Classes;
 using inSUREance.db;
-using Windows.ApplicationModel.Core;
-using Windows.UI.ViewManagement;
-using Windows.UI.Core;
-using inSUREance.Pages.Admin;
-using inSUREance.Pages.Adviser;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -41,44 +36,32 @@ namespace inSUREance
             string username = userInput.Text;
             string password = pwInput.Text;
 
-#if USR_MATHIAS
-            if (username.Equals("user") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
 
-                this.Frame.Navigate(typeof(ChooseOption));
-            }
-            else if (username.Equals("admin") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //if (username.Equals("user") && password.Equals("pw"))
+            //{
+            //    GlobalVariables.User.Name = username;
+            //    GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+            //    GlobalVariables.User.Address = "1150 Wien";
 
-                this.Frame.Navigate(typeof(ChooseOptionAdm));
-            }
-            else if (username.Equals("provider") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //    this.Frame.Navigate(typeof(ChooseOption));
+            //}
+            //else if (username.Equals("admin") && password.Equals("pw"))
+            //{
+            //    //this.Frame
+            //}
+            //else if (username.Equals("provider") && password.Equals("pw"))
+            //{
 
-                this.Frame.Navigate(typeof(ChooseOption));
-            }
-            else if (username.Equals("adviser") && password.Equals("pw"))
-            {
-                GlobalVariables.User.Name = username;
-                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                GlobalVariables.User.Address = "1150 Wien";
+            //}
+            //else if (username.Equals("adviser") && password.Equals("pw"))
+            //{
 
-                this.Frame.Navigate(typeof(ChooseOptionAdv));
-            }
-            else
-            {
-                allertMessage.Text = "Wrong Username or Password";
-            }
-#else
+            //}
+            //else
+            //{
+            //    allertMessage.Text = "Wrong Username or Password";
+            //}
+
             using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
                 GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
             {
@@ -89,69 +72,43 @@ namespace inSUREance
 
                     using (var reader = db.ExecutePreparedStatementReader(stmt))
                     {
-                        if (reader != null && reader.HasRows && reader.FieldCount == 1)
+                        if (reader != null && reader.HasRows)
                         {
                             reader.Read();
-                            int usertype = reader.GetInt32(0);
+                            string name = reader.GetString(0);
+                            DateTime birthday = reader.GetDateTime(1);
+                            string residence = reader.GetString(2);
+                            bool isConsultant = reader.GetBoolean(3);
+                            bool isAdmin = reader.GetBoolean(4);
 
-                            switch (usertype)
+                            if (!isAdmin && !isConsultant)
                             {
-                                case 0:
-                                    //TODO: invalid user
-                                    break;
-                                case 1:
-                                    //TODO: valid user
-                                    GlobalVariables.User.Name = username;
-                                    GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                                    GlobalVariables.User.Address = "1150 Wien";
+                                GlobalVariables.User.Name = name;
+                                GlobalVariables.User.Birthday = birthday;
+                                GlobalVariables.User.Address = residence;
 
-                                    this.Frame.Navigate(typeof(ChooseOption));
-                                    break;
-                                case 2:
-                                    //TODO: consultant
-                                    break;
-                                case 3:
-                                    //TODO: admin
-                                    break;
-                                default:
-                                    //TODO: invalid user
-                                    break;
+                                this.Frame.Navigate(typeof(ChooseOption));
                             }
+                            else if (isAdmin)
+                            {
+                                //TODO: admin
+                            }
+                            else if (isConsultant)
+                            {
+                                //TODO: consultant
+                            }
+                        }
+                        else
+                        {
+                            allertMessage.Text = "Wrong Username or Password";
                         }
                     }
                 }
+                else
+                {
+                    allertMessage.Text = "Wrong Username or Password";
+                }
             }
-#endif
-        }
-
-        private void Register(object sender, RoutedEventArgs e)
-        {
-            LoadRegisterUI();
-
-        }
-
-        private async void LoadRegisterUI()
-        {
-            CoreApplicationView newCoreView = CoreApplication.CreateNewView();
-
-            ApplicationView newAppView = null;
-            int mainViewId = ApplicationView.GetApplicationViewIdForWindow(
-              CoreApplication.MainView.CoreWindow);
-
-            await newCoreView.Dispatcher.RunAsync(
-              CoreDispatcherPriority.Normal,
-              () =>
-              {
-                  newAppView = ApplicationView.GetForCurrentView();
-                  Window.Current.Content = new Registration();
-                  Window.Current.Activate();
-              });
-
-            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-              newAppView.Id,
-              ViewSizePreference.UseHalf,
-              mainViewId,
-              ViewSizePreference.UseHalf);
         }
     }
 }
