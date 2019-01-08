@@ -96,11 +96,11 @@ namespace inSUREance
                             }
                             else if (isAdmin)
                             {
-                                this.frame.navigate(typeof(ChooseOptionAdm));
+                                this.Frame.Navigate(typeof(ChooseOptionAdm));
                             }
                             else if (isConsultant)
                             {
-                                this.frame.navigate(typeof(ChooseOptionAdv));
+                                this.Frame.Navigate(typeof(ChooseOptionAdv));
                             }
                         }
                         else
