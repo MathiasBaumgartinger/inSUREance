@@ -25,6 +25,9 @@ namespace inSUREance.db
 
         public override void Prepare(SqlConnection connection)
         {
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+
             command.CommandText = "add_rating_for_vendor";
 
             SqlParameter useridParam = new SqlParameter("@user_id", SqlDbType.Int);
@@ -39,8 +42,6 @@ namespace inSUREance.db
             command.Parameters.Add(useridParam);
             command.Parameters.Add(vendoridParam);
             command.Parameters.Add(starsParam);
-
-            command.Connection = connection;
             
             command.Prepare();
         }
