@@ -26,8 +26,8 @@ namespace inSUREance.Pages.User
     /// </summary>
     public sealed partial class QuestionMessenger : INotifyPropertyChanged
     {
-        private Adviser clickedAdviser;
-        public Adviser ClickedAdviser { get { return clickedAdviser; } }
+        private Classes.Adviser clickedAdviser;
+        public Classes.Adviser ClickedAdviser { get { return clickedAdviser; } }
         private string advName = "ERROR: could not be loaded";
         private List<Message> messages;
         private Message.MessageManager MesMan;
@@ -48,7 +48,7 @@ namespace inSUREance.Pages.User
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            clickedAdviser = (Adviser)e.Parameter;
+            clickedAdviser = (Classes.Adviser)e.Parameter;
 
             AdvName = clickedAdviser.Name;
             Picture = Directory.GetCurrentDirectory() + "\\Assets\\Pictures\\" + AdvName + ".jpg";

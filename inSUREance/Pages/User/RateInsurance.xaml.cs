@@ -43,6 +43,13 @@ namespace inSUREance.Pages.User
         }
 
         // TODO: Update database (rating)
+        private void Rate(object sender, RoutedEventArgs e)
+        {
+            // Update with int chosenRating
+
+            Window.Current.Close();
+        }
+
         private void oneStar(object sender, RoutedEventArgs e)
         {
             RatingStarPicOne = Directory.GetCurrentDirectory() + "\\Assets\\UI\\star_full.png";

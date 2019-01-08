@@ -11,7 +11,6 @@
     <UserControl>
         <Grid>
             <TextBlock FontSize="20" HorizontalAlignment="Left" Margin="30,20,0,0" Text="Rate this insurance" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <TextBlock FontSize="11" HorizontalAlignment="Left" Margin="30,0,0,0" Text="{Binding Path=RatingStarPicTwo}" TextWrapping="Wrap" VerticalAlignment="Top" Height="47"/>
             <Button HorizontalAlignment="Left" Height="24" Margin="35,58,0,0" VerticalAlignment="Top" Width="25" Click="oneStar">
                 <Button.Template>
                     <ControlTemplate>
@@ -48,6 +47,7 @@
                 </Button.Template>
             </Button>
             <Button Content="Cancel" HorizontalAlignment="Left" Margin="316,90,0,0" VerticalAlignment="Top" Height="32" Width="79" Click="Cancel"/>
+            <Button Content="Rate" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="32" Width="79" Click="Rate"/>
 
         </Grid>
     </UserControl>

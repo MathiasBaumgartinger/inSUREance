@@ -16,6 +16,11 @@ using inSUREance.Pages;
 using inSUREance.Pages.User;
 using inSUREance.Classes;
 using inSUREance.db;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Core;
+using inSUREance.Pages.Admin;
+using inSUREance.Pages.Adviser;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -47,15 +52,27 @@ namespace inSUREance
             }
             else if (username.Equals("admin") && password.Equals("pw"))
             {
-                //this.Frame
+                GlobalVariables.User.Name = username;
+                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                GlobalVariables.User.Address = "1150 Wien";
+
+                this.Frame.Navigate(typeof(ChooseOptionAdm));
             }
             else if (username.Equals("provider") && password.Equals("pw"))
             {
+                GlobalVariables.User.Name = username;
+                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                GlobalVariables.User.Address = "1150 Wien";
 
+                this.Frame.Navigate(typeof(ChooseOption));
             }
             else if (username.Equals("adviser") && password.Equals("pw"))
             {
+                GlobalVariables.User.Name = username;
+                GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
+                GlobalVariables.User.Address = "1150 Wien";
 
+                this.Frame.Navigate(typeof(ChooseOptionAdv));
             }
             else
             {
@@ -95,31 +112,60 @@ namespace inSUREance
                             //switch (usertype)
                             //{
                             //    case 0:
-                            //        //TODO: invalid user
+                            //        allertmessage.text = "wrong username or password";
                             //        break;
                             //    case 1:
-                            //        //TODO: valid user
-                            //        GlobalVariables.User.Name = username;
-                            //        GlobalVariables.User.Birthday = new DateTime(1997, 11, 22);
-                            //        GlobalVariables.User.Address = "1150 Wien";
-
-                            //        this.Frame.Navigate(typeof(ChooseOption));
+                            //        //todo: get data
+                            //        this.frame.navigate(typeof(ChooseOption));
                             //        break;
                             //    case 2:
-                            //        //TODO: consultant
+                            //        //todo: get data
+                            //        this.frame.navigate(typeof(ChooseOptionAdv));
                             //        break;
                             //    case 3:
-                            //        //TODO: admin
+                            //        //todo: get data
+                            //        this.frame.navigate(typeof(ChooseOptionAdv));
                             //        break;
                             //    default:
-                            //        //TODO: invalid user
+                            //        //todo: get data
+                            //        allertmessage.text = "wrong username or password";
                             //        break;
-                        //}
-                    }
+                            //}
+                        }
                     }
                 }
             }
 #endif
+        }
+
+        private void Register(object sender, RoutedEventArgs e)
+        {
+            LoadRegisterUI();
+
+        }
+
+        private async void LoadRegisterUI()
+        {
+            CoreApplicationView newCoreView = CoreApplication.CreateNewView();
+
+            ApplicationView newAppView = null;
+            int mainViewId = ApplicationView.GetApplicationViewIdForWindow(
+              CoreApplication.MainView.CoreWindow);
+
+            await newCoreView.Dispatcher.RunAsync(
+              CoreDispatcherPriority.Normal,
+              () =>
+              {
+                  newAppView = ApplicationView.GetForCurrentView();
+                  Window.Current.Content = new Registration();
+                  Window.Current.Activate();
+              });
+
+            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+              newAppView.Id,
+              ViewSizePreference.UseHalf,
+              mainViewId,
+              ViewSizePreference.UseHalf);
         }
     }
 }

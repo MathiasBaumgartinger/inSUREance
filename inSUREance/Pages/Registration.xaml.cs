@@ -12,32 +12,25 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using inSUREance.Classes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace inSUREance.Pages.User
+namespace inSUREance.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Questions : Page
+    public sealed partial class Registration : Page
     {
-        public List<Classes.Adviser> Advisers { get; set; }
-
-        public Questions()
+        public Registration()
         {
             this.InitializeComponent();
-            DataContext = this;
-
-            //Get Data
-            Advisers = Classes.Adviser.AdviserManager.GetTypes();
         }
 
-        private void AdvisersListview_ItemClick(object sender, ItemClickEventArgs e)
+        // TODO: Update database
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Classes.Adviser clickedAdviser = (Classes.Adviser)e.ClickedItem;
-            this.Frame.Navigate(typeof(QuestionMessenger), clickedAdviser);
+
         }
     }
 }
