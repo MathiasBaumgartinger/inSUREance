@@ -24,7 +24,7 @@ AS
 		IF LEN(@password) < 1 or LEN(@password) > 30 
 			THROW 60000, 'minimum 1, max 30 characters in pw allowed', 1
 
-		IF LEN(@wohnort) < 5 --(zum testen)
+		IF LEN(@wohnort) < 1 --(zum testen)
 			THROW 60000, 'place of residence not possible', 1
 
 		DECLARE @tmp_name INT = (SELECT count(*) FROM USERS WHERE NAME = @user_name)
