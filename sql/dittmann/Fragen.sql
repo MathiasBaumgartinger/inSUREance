@@ -9,13 +9,13 @@ GO
 DROP TRIGGER IF EXISTS new_question_added
 GO
 
-CREATE PROCEDURE create_frage_user @fk_id_users INT, @frage VARCHAR(30)
+CREATE PROCEDURE create_frage_user @fk_id_users INT, @frage VARCHAR(300)
 AS
 	BEGIN TRANSACTION
 	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 	BEGIN TRY
-		IF @fk_id_users < 0
-			THROW 60000, 'user id < 0', 1
+		IF (SELECT COUNT(*) FROM USERS WHERE USERS.ID = @fk_id_users) != 1
+			THROW 60000, 'user id invalid', 1
 		IF LEN(@frage) > 300
 			THROW 60000, 'frage zu lange (max 300)' , 1
 		INSERT INTO FRAGEN (FK_ID_USERS,FRAGE) VALUES (@fk_id_users,@frage)
@@ -75,8 +75,8 @@ AS
 	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 
 	BEGIN TRY
-		IF @frage_id < 0 OR (SELECT COUNT(FRAGEN.ID) FROM FRAGEN) < @frage_id
-			THROW 60000, 'frage ID not possible', 1
+		IF (SELECT COUNT(*) FROM FRAGEN WHERE FRAGEN.ID = @frage_id) != 1
+			THROW 60000, 'frage ID invalid', 1
 		IF LEN(@answer) > 300
 			THROW 60000, 'antwort zu lange', 1
 		IF LEN(@answer) = 0
