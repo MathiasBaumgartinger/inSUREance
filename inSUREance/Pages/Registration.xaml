@@ -13,13 +13,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="124,170,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,250,0,0" Text="Birthday" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,325,0,0" Text="Address" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="124,402,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="124,472,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="124,402,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox Name="UsernameBox" HorizontalAlignment="Left" Margin="124,195,0,0" VerticalAlignment="Top"/>
         <TextBox Name="AddressBox" HorizontalAlignment="Left" Margin="124,350,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="BirthdayBox" HorizontalAlignment="Left" Margin="124,275,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="124,427,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="124,497,0,0" VerticalAlignment="Top"/>
-        <Button Content="Register" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="127,560,0,0" Click="Button_Click"/>
+        <Button Content="Register" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="123,478,0,0" Click="Button_Click"/>
+        <DatePicker Name="DateBox" HorizontalAlignment="Left" Margin="124,275,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Name="pwBox" HorizontalAlignment="Left" Margin="124,427,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

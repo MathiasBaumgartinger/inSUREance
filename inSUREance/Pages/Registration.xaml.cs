@@ -1,8 +1,10 @@
-﻿using System;
+﻿using inSUREance.db;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,6 +24,11 @@ namespace inSUREance.Pages
     /// </summary>
     public sealed partial class Registration : Page
     {
+        string username;
+        string password;
+        DateTime birthday;
+        string residence;
+                
         public Registration()
         {
             this.InitializeComponent();
@@ -30,7 +37,26 @@ namespace inSUREance.Pages
         // TODO: Update database
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            username = UsernameBox.Text;
+            password = pwBox.Password;
+            birthday = DateBox.Date.Date;
+            residence = AddressBox.Text;
 
+            using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+                GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
+            {
+                if(db.Open())
+                {
+                    IPreparedStatement stmt = new CreateUserStatement(username, password, birthday, residence);
+                    stmt.Prepare(db.connection);
+
+                    db.ExecutePreparedStatementNonQuery(stmt);
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }

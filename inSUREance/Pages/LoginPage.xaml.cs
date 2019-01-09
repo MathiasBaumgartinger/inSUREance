@@ -118,32 +118,7 @@ namespace inSUREance
 
         private void Register(object sender, RoutedEventArgs e)
         {
-            LoadRegisterUI();
-
-        }
-
-        private async void LoadRegisterUI()
-        {
-            CoreApplicationView newCoreView = CoreApplication.CreateNewView();
-
-            ApplicationView newAppView = null;
-            int mainViewId = ApplicationView.GetApplicationViewIdForWindow(
-              CoreApplication.MainView.CoreWindow);
-
-            await newCoreView.Dispatcher.RunAsync(
-              CoreDispatcherPriority.Normal,
-              () =>
-              {
-                  newAppView = ApplicationView.GetForCurrentView();
-                  Window.Current.Content = new Registration();
-                  Window.Current.Activate();
-              });
-
-            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-              newAppView.Id,
-              ViewSizePreference.UseHalf,
-              mainViewId,
-              ViewSizePreference.UseHalf);
+            this.Frame.Navigate(typeof(Registration));
         }
     }
 }
