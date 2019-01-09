@@ -110,5 +110,10 @@ namespace inSUREance
                 }
             }
         }
+
+        private void Register(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Registration));
+        }
     }
 }
