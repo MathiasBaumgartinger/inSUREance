@@ -4,7 +4,7 @@ DROP PROCEDURE IF EXISTS create_frage_user
 GO
 DROP FUNCTION IF EXISTS get_open_questions_by_berater_id	--VIEW nicht möglich, da Parameterübergabe notwendig
 GO
-DROP PROCEDURE IF EXISTS update_question_with_answer
+DROP PROCEDURE IF EXISTS give_answer
 GO
 DROP TRIGGER IF EXISTS new_question_added
 GO
