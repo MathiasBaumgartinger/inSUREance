@@ -35,7 +35,7 @@ AS
 	END CATCH
 GO
 
-CREATE INDEX index_berater_anbieter_id ON dbo.BERATER(FK_ID_ANB)
+CREATE NONCLUSTERED INDEX index_berater_anbieter_id ON dbo.BERATER(FK_ID_ANB)
 GO
 
 CREATE FUNCTION dbo.func_berater_name_by_anbieter_id (@anbieter_id INT)
