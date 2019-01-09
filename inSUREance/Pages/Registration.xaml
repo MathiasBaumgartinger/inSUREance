@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Click_Back"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,170,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,250,0,0" Text="Birthday" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,325,0,0" Text="Address" TextWrapping="Wrap" VerticalAlignment="Top"/>

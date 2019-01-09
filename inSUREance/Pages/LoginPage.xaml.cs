@@ -75,17 +75,19 @@ namespace inSUREance
                         if (reader != null && reader.HasRows)
                         {
                             reader.Read();
-                            string name = reader.GetString(0);
-                            DateTime birthday = reader.GetDateTime(1);
-                            string residence = reader.GetString(2);
-                            bool isConsultant = reader.GetBoolean(3);
-                            bool isAdmin = reader.GetBoolean(4);
+                            int id = reader.GetInt32(0);
+                            string name = reader.GetString(1);
+                            DateTime birthday = reader.GetDateTime(2);
+                            string residence = reader.GetString(3);
+                            bool isConsultant = reader.GetBoolean(4);
+                            bool isAdmin = reader.GetBoolean(5);
 
                             if (!isAdmin && !isConsultant)
                             {
                                 GlobalVariables.User.Name = name;
                                 GlobalVariables.User.Birthday = birthday;
                                 GlobalVariables.User.Address = residence;
+                                GlobalVariables.User.Id = id;
 
                                 this.Frame.Navigate(typeof(ChooseOption));
                             }

@@ -99,10 +99,12 @@
     <Compile Include="Classes\Insurance.cs" />
     <Compile Include="Classes\InsuranceType.cs" />
     <Compile Include="Classes\Message.cs" />
+    <Compile Include="db\FragenStatement.cs" />
     <Compile Include="db\IDataBaseAccess.cs" />
     <Compile Include="db\InsuranceDataBaseAccess.cs" />
     <Compile Include="db\IPreparedStatement.cs" />
     <Compile Include="db\ProductStatement.cs" />
+    <Compile Include="db\ProviderStatement.cs" />
     <Compile Include="db\RatingStatement.cs" />
     <Compile Include="db\UserStatement.cs" />
     <Compile Include="GlobalVariables.cs" />

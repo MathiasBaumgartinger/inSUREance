@@ -29,6 +29,7 @@ namespace inSUREance.Pages.User
     public sealed partial class DetailedInsurance : Page
     {
         public List<Insurance> displayInsurance = new List<Insurance>();
+        private Insurance currentInsur;
 
         public DetailedInsurance()
         {
@@ -37,8 +38,8 @@ namespace inSUREance.Pages.User
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Insurance newInsurance = (Insurance)e.Parameter;
-            displayInsurance.Add(newInsurance);
+            currentInsur = (Insurance)e.Parameter;
+            displayInsurance.Add(currentInsur);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -83,7 +84,7 @@ namespace inSUREance.Pages.User
               () =>
               {
                   newAppView = ApplicationView.GetForCurrentView();
-                  Window.Current.Content = new RateInsurance();
+                  Window.Current.Content = new RateInsurance(currentInsur);
                   Window.Current.Activate();
               });
 

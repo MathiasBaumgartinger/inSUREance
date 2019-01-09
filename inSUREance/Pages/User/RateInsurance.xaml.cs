@@ -1,4 +1,6 @@
-﻿using System;
+﻿using inSUREance.Classes;
+using inSUREance.db;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -30,11 +32,15 @@ namespace inSUREance.Pages.User
         private string ratingStarPicFour = Directory.GetCurrentDirectory() + "\\Assets\\UI\\star.png";
         private string ratingStarPicFive = Directory.GetCurrentDirectory() + "\\Assets\\UI\\star.png";
         private int chosenRating;
+        private string providerName;
+        private int providerID;
 
-        public RateInsurance()
+        public RateInsurance(Insurance insur)
         {
             this.InitializeComponent();
             this.DataContext = this;
+
+            providerName = insur.Provider;
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
@@ -46,6 +52,31 @@ namespace inSUREance.Pages.User
         private void Rate(object sender, RoutedEventArgs e)
         {
             // Update with int chosenRating
+            using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+               GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
+            {
+                if (db.Open())
+                {
+                    // select the provider first
+                    IPreparedStatement provStmt = new GetProviderIDStatement(providerName);
+                    provStmt.Prepare(db.connection);
+                    using (var reader = db.ExecutePreparedStatementReader(provStmt))
+                    {
+                        if (reader != null && reader.HasRows)
+                        {
+                            reader.Read();
+                            providerID = reader.GetInt32(0);
+                        }
+                    }
+
+                    // now rate the provider 
+                    int userID = GlobalVariables.User.Id;
+                    IPreparedStatement stmt = new VendorRatingStatement(userID, providerID, chosenRating);
+                    stmt.Prepare(db.connection);
+
+                    db.ExecutePreparedStatementNonQuery(stmt);
+                }
+            }
 
             Window.Current.Close();
         }

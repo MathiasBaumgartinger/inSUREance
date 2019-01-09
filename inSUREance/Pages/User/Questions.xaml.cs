@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using inSUREance.Classes;
+using inSUREance.db;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -38,6 +39,31 @@ namespace inSUREance.Pages.User
         {
             Classes.Adviser clickedAdviser = (Classes.Adviser)e.ClickedItem;
             this.Frame.Navigate(typeof(QuestionMessenger), clickedAdviser);
+        }
+
+        private void Button_Click_Back(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ChooseOption));
+        }
+
+        private void Send(object sender, RoutedEventArgs e)
+        {
+            string question = questionBox.Text;
+
+            using (var db = new InsuranceDataBaseAccess(GlobalVariables.DATABASE.SERVERNAME,
+                GlobalVariables.DATABASE.USERNAME, GlobalVariables.DATABASE.PASSWORD))
+            {
+                if (db.Open())
+                {
+                    int ID = GlobalVariables.User.Id; 
+
+                    IPreparedStatement stmt = new CreateFragenStatement(question, ID);
+                    stmt.Prepare(db.connection);
+                    db.ExecutePreparedStatementNonQuery(stmt);
+
+                    StatusMessage.Text = "New question was send, you will soon get an answer :-)";
+                }
+            }
         }
     }
 }

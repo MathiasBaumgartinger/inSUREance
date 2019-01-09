@@ -9,23 +9,26 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <UserControl>
-        <UserControl.Resources>
-            <DataTemplate x:Key="AdvisersListedTemplate" x:DataType="data:Adviser">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
-                    <Image Name="adviser" Source="{x:Bind Picture}" HorizontalAlignment="Center" Width="150" />
-                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" />
-                </StackPanel>
-            </DataTemplate>
-        </UserControl.Resources>
-        <Grid>
-            <Grid>
-                <ListView Name="AdvisersListview" 
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="AdvisersListedTemplate" x:DataType="data:Adviser">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="20,20,20,20">
+                <Image Name="adviser" Source="{x:Bind Picture}" HorizontalAlignment="Center" Width="150" />
+                <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="0,0,0,0">
+        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button_Click_Back"/>
+        <ListView Name="AdvisersListview" 
                   ItemsSource="{x:Bind Advisers}"
                   ItemTemplate="{StaticResource AdvisersListedTemplate}"
                   IsItemClickEnabled="True"
-                  ItemClick="AdvisersListview_ItemClick" Margin="0,88,0,0"/>
-            </Grid>
-        </Grid>
-    </UserControl>
+                  ItemClick="AdvisersListview_ItemClick" Margin="0,88,0,583" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <TextBlock HorizontalAlignment="Left" Margin="75,466,0,0" Text="Got a new question?" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock Name="StatusMessage" Foreground="Green" HorizontalAlignment="Left" Margin="264,561,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox Name="questionBox" HorizontalAlignment="Left" Margin="74,491,0,0" Text="Write Message" TextWrapping="Wrap" VerticalAlignment="Top" Width="1039" Height="57"/>
+        <Button Content="Send" HorizontalAlignment="Left" Margin="74,561,0,0" VerticalAlignment="Top" Width="149" Click="Send"/>
+    </Grid>
+
 </Page>

@@ -58,5 +58,10 @@ namespace inSUREance.Pages
                 }
             }
         }
+
+        private void Button_Click_Back(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(LoginPage));
+        }
     }
 }

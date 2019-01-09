@@ -54,6 +54,11 @@ namespace inSUREance.Pages.User
             Picture = Directory.GetCurrentDirectory() + "\\Assets\\Pictures\\" + AdvName + ".jpg";
         }
 
+        private void Button_Click_Back(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ChooseOption));
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

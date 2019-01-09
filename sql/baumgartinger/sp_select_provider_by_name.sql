@@ -1,0 +1,20 @@
+CREATE PROCEDURE select_providerId_by_name @provider VARCHAR(30)
+AS
+	BEGIN TRANSACTION
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+
+	BEGIN TRY
+		IF LEN(@provider) > 30 OR LEN(@provider) < 1
+				THROW 60000, 'provider must have at least 1 letter, max 30 letters', 1
+
+		SELECT ID FROM ANBIETER
+		WHERE @provider = NAME
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		PRINT ERROR_MESSAGE()
+		ROLLBACK TRANSACTION
+	END CATCH
+GO
+
